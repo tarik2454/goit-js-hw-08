@@ -20,10 +20,11 @@ const createCardsMarkup = cards => {
   `;
 };
 
-const createCardsGallery = [...galleryItems].map(createCardsMarkup).join('');
+const createCardsGallery = galleryItems.map(createCardsMarkup).join('');
 galleryList.insertAdjacentHTML('beforeend', createCardsGallery);
 
 new SimpleLightbox('.gallery a', {
+  captionSelector: 'alt',
   captionDelay: 250,
   fadeSpeed: 150,
   animationSlide: false,

@@ -9,30 +9,11 @@ const player = new Player('vimeo-player', {
 player.on('timeupdate', throttle(savedCurrentTime, 1000));
 
 function savedCurrentTime({ seconds }) {
-  try {
-    localStorage.setItem('videoplayer-current-time', JSON.stringify(seconds));
-  } catch (error) {
-    console.warn(error.message);
-  }
+  localStorage.setItem('videoplayer-current-time', JSON.stringify(seconds));
 }
 
 const getCurrentTime = JSON.parse(
-  localStorage.getItem('videoplayer-current-time')
+  localStorage.getItem('videoplayer-current-time') || 0
 );
 
-player
-  .setCurrentTime(getCurrentTime)
-  .then(function (seconds) {
-    // seconds = the actual time that the player seeked to
-  })
-  .catch(function (error) {
-    switch (error.name) {
-      case 'RangeError':
-        // the time was less than 0 or greater than the video’s duration
-        break;
-
-      default:
-        // some other error occurred
-        break;
-    }
-  });
+player.setCurrentTime(getCurrentTime);
