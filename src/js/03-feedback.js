@@ -6,17 +6,14 @@ const LOCALSTORAGE_KEY = 'feedback-form-state';
 feedbackForm.addEventListener('submit', onFormSumbmit);
 feedbackForm.addEventListener('input', throttle(onFormFillChange, 500));
 
-const userData = {};
+const userData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)) || {};
 
-fillFormFields();
+fillFormFields(userData);
 
-function fillFormFields() {
-  const savedDataForm =
-    JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)) || {};
-
-  for (const key in savedDataForm) {
-    if (savedDataForm.hasOwnProperty(key)) {
-      feedbackForm.elements[key].value = savedDataForm[key];
+function fillFormFields(userData) {
+  for (const key in userData) {
+    if (userData.hasOwnProperty(key)) {
+      feedbackForm.elements[key].value = userData[key];
     }
   }
 }
